@@ -45,6 +45,7 @@ vec2 map(in vec3 p) {
     vec2 d = vec2(shape1(p - vec3(-2., 1., 0.)), 2.);
     d = opU(d, vec2(shape2(p - vec3(2., 1., 0.)), 3.));
     d = opU(d, vec2(shape3(p - vec3(0., 1., 2.)), 4.));
+    d = opU(d, vec2(shape3(p - vec3(3., 3., 0.)), 4.));
     return d;
 }
 
@@ -122,7 +123,7 @@ float checkersGrad( in vec2 uv, in vec2 ddx, in vec2 ddy )
 
 vec3 render(in vec2 uv, in vec2 px, in vec2 py) {
     float r = 5.;
-    vec3 ro = vec3(r * cos(.1 * iTime), 2., r * sin(.1 * iTime));
+    vec3 ro = 3. * vec3(2.,2.,2.);
     if(iMouse.z > 0.01) {
         float theta = iMouse.x / iResolution.x * 2. * PI;
         ro = vec3(r * cos(theta), 2., r * sin(theta));

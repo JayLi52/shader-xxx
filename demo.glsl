@@ -37,6 +37,18 @@ vec2 fixUV(in vec2 uv) {
 //     return clamp(f, 0., 1.);
 // }
 
+float sdfRect(vec2 p, vec2 size) {
+    vec2 d = abs(p) - size * 0.5;
+    return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
+}
+
+float sdBox( in vec2 p, in vec2 b )
+{
+    vec2 d = abs(p)-b;
+    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
+}
+
+
 vec3 crod(in vec2 uv) {
     vec3 col = vec3(0.);
     uv = fixUV(uv);
@@ -52,7 +64,9 @@ vec3 crod(in vec2 uv) {
     const float epsilon = 0.01;
     //uv
     col = mix(col, vec3(1.,1.,0.), func(uv));
-    col.r = smoothstep(1., .99, length(uv));
+    // col.r = smoothstep(1., .99, length(uv));
+
+    col = mix(col, vec3(0.23), smoothstep(.2, .199, sdfRect(uv, vec2(1.,1.))));
     
     return col;
 }
